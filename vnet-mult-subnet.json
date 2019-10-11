@@ -18,7 +18,7 @@
         },
         "subnetCount": {
             "type": "int",
-            "defaultValue": "2",
+            "defaultValue": 2,
             "metadata": {
                 "description": "Number of subnets to add"
             }
