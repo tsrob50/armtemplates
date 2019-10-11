@@ -79,13 +79,13 @@
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "name": "[concat(parameters('vnetName'), '/', parameters('subnetNamePrefix'), '-', copyIndex(0))]",
             "location": "[resourceGroup().location]",
-            "tags": "[parameters('tagValues')]",
             "properties": {
                 "addressPrefix": "[concat(variables('subnetPrefixSplit')[0], '.', variables('subnetPrefixSplit')[1], '.', add(copyIndex(), int(variables('subnetPrefixSplit')[2])), '.', variables('subnetPrefixSplit')[3])]"
             },
             "copy": {
                 "name": "subnetLoop",
                 "count": "[parameters('subnetCount')]",
+                "mode": "Serial"
             },
             "DependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
