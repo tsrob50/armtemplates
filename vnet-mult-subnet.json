@@ -2,6 +2,17 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "tagValues": {
+            "type": "object",
+            "defaultValue": {
+              "Dept": "IT",
+              "Environment": "Production",
+              "Service": "Messaging"
+            },
+            "metadata": {
+                "descriptoin": "Enter tag information for the deployment"
+            }
+          },
         "vnetName": {
             "type": "string",
             "defaultValue": "VNet01",
@@ -11,21 +22,21 @@
         },
         "vnetAddressPrefix": {
             "type": "string",
-            "defaultValue": "10.0.0.0/16",
+            "defaultValue": "10.30.0.0/16",
             "metadata": {
-                "description": "Address prefix"
+                "description": "Address prefix ALSO UPDATE SUBNET RANGE"
             }
         },
         "subnetCount": {
             "type": "int",
-            "defaultValue": 100,
+            "defaultValue": 4,
             "metadata": {
                 "description": "Number of subnets to add"
             }
         },
         "subnet1Prefix": {
             "type": "string",
-            "defaultValue": "10.0.0.0/24",
+            "defaultValue": "10.30.0.0/24",
             "metadata": {
                 "description": "First subnet in the scope, must be a /24 address space"
             }
@@ -54,6 +65,7 @@
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[parameters('vnetName')]",
             "location": "[parameters('location')]",
+            "tags": "[parameters('tagValues')]",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -67,6 +79,7 @@
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "name": "[concat(parameters('vnetName'), '/', parameters('subnetNamePrefix'), '-', copyIndex(0))]",
             "location": "[resourceGroup().location]",
+            "tags": "[parameters('tagValues')]",
             "properties": {
                 "addressPrefix": "[concat(variables('subnetPrefixSplit')[0], '.', variables('subnetPrefixSplit')[1], '.', add(copyIndex(), int(variables('subnetPrefixSplit')[2])), '.', variables('subnetPrefixSplit')[3])]"
             },
