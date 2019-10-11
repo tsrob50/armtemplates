@@ -96,7 +96,7 @@
     "outputs": {
         "vnetId": {
             "type": "string",
-            "value": "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+            "value": "[parameters('vnetName')]"
         }
     }
 }
