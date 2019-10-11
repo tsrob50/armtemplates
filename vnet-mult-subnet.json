@@ -18,7 +18,7 @@
         },
         "subnetCount": {
             "type": "int",
-            "defaultValue": 2,
+            "defaultValue": 100,
             "metadata": {
                 "description": "Number of subnets to add"
             }
@@ -73,7 +73,6 @@
             "copy": {
                 "name": "subnetLoop",
                 "count": "[parameters('subnetCount')]",
-                "mode": "serial"
             },
             "DependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
