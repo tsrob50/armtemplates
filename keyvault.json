@@ -60,7 +60,7 @@
     },
     "variables": {
         "tenantId": "[subscription().tenantId]",
-        "vaultName": "[concat(parameters('keyVaultName'), uniqueString(resourceGroup().id))]"
+        "vaultName": "[concat(parameters('keyVaultName'), '_', uniqueString(resourceGroup().id))]"
     },
     "functions": [
     ],
