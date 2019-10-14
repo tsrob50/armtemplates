@@ -1,0 +1,170 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "tagValues": {
+            "type": "object",
+            "defaultValue": {
+                "Dept": "IT",
+                "Environment": "Test",
+                "Service": "TravisR"
+            },
+            "metadata": {
+                "descriptoin": "Enter tag information for the deployment"
+            }
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "tempKeyault",
+            "metadata": {
+                "description": "The name of the key KeyVault"
+            }
+        },
+        "skuName": {
+            "type": "string",
+            "defaultValue": "premium",
+            "allowedValues": [
+                "standard",
+                "premium"
+            ],
+            "metadata": {
+                "description": "SKU name for the vault, options are premium or standard"
+            }
+        },
+        "userObjectId": {
+            "type": "string",
+            "metadata": {
+                "description": "the user Object ID for access to the KV."
+            }
+        },
+        "secretName": {
+            "type": "string",
+            "defaultValue": "addminpass",
+            "metadata": {
+                "description": "Enter description"
+            }
+        },
+        "secretValue": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Specifies the value of the secret that you want to create."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {
+        "tenantId": "[subscription().tenantId]",
+        "vaultName": "[concat(parameters('keyVaultName'), uniqueString(resourceGroup().id))]"
+    },
+    "functions": [
+    ],
+    "resources": [
+        {
+            "name": "[variables('vaultName')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2018-02-14",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tagValues')]",
+            "properties": {
+                "tenantId": "[variables('tenantId')]",
+                "sku": {
+                    "family": "A",
+                    "name": "[parameters('skuName')]"
+                },
+                "accessPolicies": [
+                    {
+                        "tenantId": "[variables('tenantId')]",
+                        "objectId": "[parameters('userObjectId')]",
+                        "permissions": {
+                            "keys": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore"
+                            ],
+                            "secrets": [
+                                "get",
+                                "list",
+                                "set",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore"
+                            ],
+                            "certificates": [
+                                "backup",
+                                "create",
+                                "delete",
+                                "deleteissuers",
+                                "get",
+                                "getissuers",
+                                "import",
+                                "list",
+                                "listissuers",
+                                "managecontacts",
+                                "manageissuers",
+                                "purge",
+                                "recover",
+                                "restore",
+                                "setissuers",
+                                "update"
+                            ],
+                            "storage": [
+                                "get",
+                                "list",
+                                "delete",
+                                "set",
+                                "update",
+                                "regeneratekey",
+                                "recover",
+                                "purge",
+                                "backup",
+                                "restore",
+                                "setsas",
+                                "listsas",
+                                "getsas",
+                                "deletesas"
+                            ]
+                        }
+                    }
+                ],
+                "vaultUri": "string",
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true,
+                "enablePurgeProtection": true
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "name": "[concat(variables('vaultName'), '/', parameters('secretName'))]",
+            "apiVersion": "2018-02-14",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', variables('vaultName'))]"
+            ],
+            "properties": {
+                "value": "[parameters('secretValue')]"
+            }
+        }
+
+    ],
+    "outputs": {
+            "vaultName": {
+            "type": "string",
+            "value": "[variables('vaultName')]"
+        }
+    }
+}
