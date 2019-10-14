@@ -6,8 +6,8 @@
             "type": "object",
             "defaultValue": {
               "Dept": "IT",
-              "Environment": "Production",
-              "Service": "Messaging"
+              "Environment": "Test",
+              "Service": "TravisR"
             },
             "metadata": {
                 "descriptoin": "Enter tag information for the deployment"
