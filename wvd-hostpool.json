@@ -245,6 +245,7 @@
     "variables": {
         "rdshManagedDisks": "[if(equals(parameters('rdshImageSource'), 'CustomVHD'), parameters('rdshUseManagedDisks'), bool('true'))]",
         "rdshPrefix": "[concat(parameters('rdshNamePrefix'),'-')]",
+        "rdshavailabilitySet": "[concat(variables('rdshPrefix'), 'availabilitySet')]",
         "avSetSKU": "[if(variables('rdshManagedDisks'), 'Aligned', 'Classic')]",
         "existingDomainUsername": "[first(split(parameters('domainJoinUPN'), '@'))]",
         "vhds": "[concat('vhds','/', variables('rdshPrefix'))]",
@@ -273,7 +274,7 @@
             "apiVersion": "2018-10-01",
             "condition": "[equals(parameters('enablePersistentDesktop'),bool('False'))]",
             "type": "Microsoft.Compute/availabilitySets",
-            "name": "[concat(variables('rdshPrefix'), 'availabilitySet')]",
+            "name": "[variables('rdshavailabilitySet')]",
             "location": "[parameters('location')]",
             "properties": {
                 "platformUpdateDomainCount": 5,
@@ -288,7 +289,7 @@
             "name": "vmCreation-linkedTemplate",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[concat('Microsoft.Compute/availabilitySets/', variables('rdshPrefix'), 'availabilitySet')]"
+                "[concat('Microsoft.Compute/availabilitySets/', variables('rdshavailabilitySet'))]"
             ],
             "properties": {
                 "mode": "Incremental",
