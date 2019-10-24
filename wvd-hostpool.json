@@ -325,7 +325,7 @@
                     "existingDomainusername": {
                         "value": "[variables('existingDomainUsername')]"
                     },
-                    "domainJoinPassword": {
+                    "existingDomainPassword": {
                         "value": "[parameters('domainJoinPassword')]"
                     },
                     "subnet-id": {
