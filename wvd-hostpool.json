@@ -121,13 +121,13 @@
                 "description": "FQDN of the AD Domain to which session host VMs are going to be joined. For example, 'contoso.com'."
             }
         },
-        "domainJoinUPN": {
+        "existingDomainusername": {
             "type": "string",
             "metadata": {
                 "description": "A username in the domain that has privileges to join the session hosts to the domain. For example, 'user1@contoso.com'."
             }
         },
-        "domainJoinPassword": {
+        "existingDomainPassword": {
             "type": "securestring",
             "metadata": {
                 "description": "The password that corresponds to the existing domain username."
@@ -247,7 +247,7 @@
         "rdshPrefix": "[concat(parameters('rdshNamePrefix'),'-')]",
         "rdshavailabilitySet": "[concat(variables('rdshPrefix'), 'availabilitySet')]",
         "avSetSKU": "[if(variables('rdshManagedDisks'), 'Aligned', 'Classic')]",
-        "existingDomainUsername": "[first(split(parameters('domainJoinUPN'), '@'))]",
+        "existingDomainUsername": "[first(split(parameters('existingDomainusername'), '@'))]",
         "vhds": "[concat('vhds','/', variables('rdshPrefix'))]",
         "subnet-id": "[resourceId(parameters('virtualNetworkResourceGroupName'),'Microsoft.Network/virtualNetworks/subnets',parameters('existingVnetName'), parameters('existingSubnetName'))]",
         "existingTenantName": "[replace(parameters('existingTenantName'),'\"','')]",
@@ -326,7 +326,7 @@
                         "value": "[variables('existingDomainUsername')]"
                     },
                     "existingDomainPassword": {
-                        "value": "[parameters('domainJoinPassword')]"
+                        "value": "[parameters('existingDomainPassword')]"
                     },
                     "subnet-id": {
                         "value": "[variables('subnet-id')]"
@@ -369,12 +369,12 @@
                 "settings": {
                     "name": "[parameters('domainToJoin')]",
                     "ouPath": "[parameters('ouPath')]",
-                    "user": "[parameters('domainJoinUPN')]",
+                    "user": "[parameters('existingDomainusername')]",
                     "restart": "true",
                     "options": "3"
                 },
                 "protectedSettings": {
-                    "password": "[parameters('domainJoinPassword')]"
+                    "password": "[parameters('existingDomainPassword')]"
                 }
             }
         },
