@@ -85,7 +85,7 @@
             "metadata": {
                 "description": "The VM disk type for the VM: Premium_LRS (Default), Standard_LRS or StandardSSD_LRS."
             },
-            "defaultValue": "Premium_LRS"
+            "defaultValue": "Standard_LRS"
         },
         "rdshVmSize": {
             "type": "string",
