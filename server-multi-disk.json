@@ -194,7 +194,7 @@
         "medium": "Standard_B2S",
         "large": "Standard_B4MS",
         "availabilitySetName": "[concat(parameters('virtualMachineNamePrefix'), '_AS')]",
-        "storageAccountName": "[tolower(concat(parameters('virtualMachineNamePrefix'), 'diag', uniqueString(resourceGroup().id)))]"
+        "storageAccountName": "[tolower(concat(parameters('virtualMachineNamePrefix'), 'diag', take(uniqueString(resourceGroup().id), 5)))]"
     },
     "resources": [
         {
