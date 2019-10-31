@@ -227,7 +227,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces/', parameters('vmNamePrefix'), copyIndex(1),'_NIC1')]",
+                "[resourceId('Microsoft.Network/networkInterfaces/', concat(parameters('vmNamePrefix'), copyIndex(1),'_NIC1'))]",
                 "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
             ],
             "properties": {
