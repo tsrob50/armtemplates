@@ -480,8 +480,13 @@
             "apiVersion": "2015-06-15",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/',variables('rdshPrefix'), copyindex(1),'/extensions/dscextension')]"
+                "[concat('Microsoft.Compute/virtualMachines/', variables('rdshPrefix'),'0/extensions/dscextension')]",
+                "additional-rdsh-dsc-loop"
             ],
+                        "copy": {
+                "name": "rdsh-OMS-add-loop",
+                "count": "[parameters('rdshNumberOfInstances')]"
+            },
             "properties": {
                 "publisher": "Microsoft.EnterpriseCloud.Monitoring",
                 "type": "MicrosoftMonitoringAgent",
