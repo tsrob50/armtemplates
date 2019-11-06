@@ -234,6 +234,19 @@
                 "description": "(Required when isServicePrincipal = True) This value identifies the Azure AD tenant of the service principal."
             }
         },
+        "workspaceId": {
+            "type": "string",
+            "metadata": {
+                    "description": "Enter the valure of the Log Analytics Workspace ID"
+                }
+        },
+        "WorkspaceKey": {
+            "type": "string",
+
+            "metadata": {
+                    "description": "Enter the value of the Log Analytics Workspace Key"
+                }
+        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -458,6 +471,27 @@
                     "items": {
                         "tenantAdminPassword": "[parameters('tenantAdminPassword')]"
                     }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('rdshPrefix'), copyindex(1),'/OMSExtension')]",
+            "apiVersion": "2015-06-15",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/',variables('rdshPrefix'), copyindex(1),'/extensions/dscextension')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+                "type": "MicrosoftMonitoringAgent",
+                "typeHandlerVersion": "1.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workspaceId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceId')), '2015-03-20').customerId]"
+                },
+                "protectedSettings": {
+                    "workspaceKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('WorkspaceKey')), '2015-03-20').primarySharedKey]"
                 }
             }
         }
