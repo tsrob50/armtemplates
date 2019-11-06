@@ -237,15 +237,15 @@
         "workspaceId": {
             "type": "string",
             "metadata": {
-                    "description": "Enter the valure of the Log Analytics Workspace ID"
-                }
+                "description": "Enter the valure of the Log Analytics Workspace ID"
+            }
         },
         "WorkspaceKey": {
             "type": "string",
 
             "metadata": {
-                    "description": "Enter the value of the Log Analytics Workspace Key"
-                }
+                "description": "Enter the value of the Log Analytics Workspace Key"
+            }
         },
         "location": {
             "type": "string",
@@ -483,7 +483,7 @@
                 "[concat('Microsoft.Compute/virtualMachines/', variables('rdshPrefix'),'0/extensions/dscextension')]",
                 "additional-rdsh-dsc-loop"
             ],
-                        "copy": {
+            "copy": {
                 "name": "rdsh-OMS-add-loop",
                 "count": "[parameters('rdshNumberOfInstances')]"
             },
@@ -493,10 +493,10 @@
                 "typeHandlerVersion": "1.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "workspaceId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceId')), '2015-03-20').customerId]"
+                    "workspaceId": "[parameters('workspaceId')]"
                 },
                 "protectedSettings": {
-                    "workspaceKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('WorkspaceKey')), '2015-03-20').primarySharedKey]"
+                    "workspaceKey": "[parameters('WorkspaceKey')]"
                 }
             }
         }
