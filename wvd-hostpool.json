@@ -242,7 +242,6 @@
         },
         "WorkspaceKey": {
             "type": "string",
-
             "metadata": {
                 "description": "Enter the value of the Log Analytics Workspace Key"
             }
