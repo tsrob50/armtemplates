@@ -240,7 +240,7 @@
                 "description": "Enter the valure of the Log Analytics Workspace ID"
             }
         },
-        "WorkspaceKey": {
+        "workspaceKey": {
             "type": "string",
             "metadata": {
                 "description": "Enter the value of the Log Analytics Workspace Key"
@@ -495,7 +495,7 @@
                     "workspaceId": "[parameters('workspaceId')]"
                 },
                 "protectedSettings": {
-                    "workspaceKey": "[parameters('WorkspaceKey')]"
+                    "workspaceKey": "[parameters('workspaceKey')]"
                 }
             }
         }
