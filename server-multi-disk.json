@@ -116,9 +116,8 @@
         },
         "numberOfDataDisks": {
             "type": "int",
-            "defaultvalue": 0,
+            "defaultvalue": 1,
             "allowedvalues": [
-                0,
                 1,
                 2,
                 3
