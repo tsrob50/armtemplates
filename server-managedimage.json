@@ -377,7 +377,6 @@
             "apiVersion": "2015-06-15",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineNamePrefix'),'0/extensions/dscextension')]",
                 "domainJoinLoop"
             ],
             "copy": {
