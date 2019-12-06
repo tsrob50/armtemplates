@@ -378,7 +378,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineNamePrefix'),'0/extensions/dscextension')]",
-                "additional-rdsh-dsc-loop"
+                "domainJoinLoop"
             ],
             "copy": {
                 "name": "OMS-add-loop",
