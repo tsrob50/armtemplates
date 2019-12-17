@@ -118,6 +118,7 @@
             "type": "int",
             "defaultvalue": 1,
             "allowedvalues": [
+                0,
                 1,
                 2,
                 3

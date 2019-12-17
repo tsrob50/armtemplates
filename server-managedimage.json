@@ -46,6 +46,18 @@
                 "descripton": "Image SKU for the VM"
             }
         },
+        "vmPriority": {
+            "type": "string",
+            "defaultValue": "Regular",
+            "allowedValues": [
+                "Regular",
+                "Low",
+                "Spot"
+            ],
+            "metadata": {
+                "description": "Enter description"
+            }
+        },
         "adminUsername": {
             "type": "string",
             "defaultvalue": "locadmin",
@@ -206,7 +218,7 @@
         {
             "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1))]",
             "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2018-06-01",
+            "apiVersion": "2019-03-01",
             "location": "[parameters('location')]",
             "tags": "[parameters('tagValues')]",
             "copy": {
@@ -257,6 +269,11 @@
                         "enabled": true,
                         "storageUri": "[reference(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2017-06-01').primaryEndpoints['blob']]"
                     }
+                },
+                "priority": "[parameters('vmPriority')]",
+                "evictionPolicy": "Deallocate",
+                "billingProfile": {
+                    "maxPrice": -1
                 },
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
