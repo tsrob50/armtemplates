@@ -26,7 +26,8 @@
             "allowedvalues": [
                 "small",
                 "medium",
-                "large"
+                "large",
+                "dsmall"
             ],
             "metadata": {
                 "description": "Size of B series VM, small 1 core, medium 2 core, Large 4 core "
@@ -210,6 +211,7 @@
         "small": "Standard_B1MS",
         "medium": "Standard_B2S",
         "large": "Standard_B4MS",
+        "dsmall": "Standard_DS1_v2",
         "availabilitySetName": "[concat(parameters('virtualMachineNamePrefix'), '_AS')]",
         "storageAccountName": "[tolower(concat(parameters('virtualMachineNamePrefix'), 'diag', take(uniqueString(resourceGroup().id), 5)))]",
         "imageResourceId": "[resourceId(parameters('ImageSourceResourceGroup'), 'Microsoft.Compute/images', parameters('ImageSourceName'))]"
