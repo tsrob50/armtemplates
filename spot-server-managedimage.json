@@ -197,7 +197,7 @@
         "dsmall": "Standard_D8_v3",
         "dmedium": "Standard_D16_v3",
         "dlarge": "Standard_D32_v3",
-        "dxlarge": "Standard_D64_v3"
+        "dxlarge": "Standard_D64_v3",
         "storageAccountName": "[tolower(concat(parameters('virtualMachineNamePrefix'), 'diag', take(uniqueString(resourceGroup().id), 5)))]",
         "imageResourceId": "[resourceId(parameters('ImageSourceResourceGroup'), 'Microsoft.Compute/images', parameters('ImageSourceName'))]"
     },
