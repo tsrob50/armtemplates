@@ -24,10 +24,10 @@
             "type": "string",
             "defaultvalue": "small",
             "allowedvalues": [
-                "small",
-                "medium",
-                "large",
-                "dsmall"
+                "dsmall",
+                "dmedium",
+                "dlarge",
+                "dxlarge"
             ],
             "metadata": {
                 "description": "Size of B series VM, small 1 core, medium 2 core, Large 4 core "
@@ -194,10 +194,10 @@
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
         "addressPrefixSplit": "[split(parameters('firstIpAddress'), '.')]",
-        "small": "Standard_B1MS",
-        "medium": "Standard_B2S",
-        "large": "Standard_B4MS",
-        "dsmall": "Standard_DS1_v2",
+        "dsmall": "Standard_D8_v3",
+        "dmedium": "Standard_D16_v3",
+        "dlarge": "Standard_D32_v3",
+        "dxlarge": "Standard_D64_v3"
         "storageAccountName": "[tolower(concat(parameters('virtualMachineNamePrefix'), 'diag', take(uniqueString(resourceGroup().id), 5)))]",
         "imageResourceId": "[resourceId(parameters('ImageSourceResourceGroup'), 'Microsoft.Compute/images', parameters('ImageSourceName'))]"
     },
