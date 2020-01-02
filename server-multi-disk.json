@@ -234,7 +234,7 @@
                     },
                     "osDisk": {
                         "createOption": "fromImage",
-                        "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(), '_os')]",
+                        "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '_os')]",
                         "caching": "ReadWrite",
                         "managedDisk": {
                             "storageAccountType": "[parameters('dataDiskStrgType')]"
