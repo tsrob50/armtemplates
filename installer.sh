@@ -3,22 +3,22 @@
 # installer script
 # simple but works
 
-date >>installoutput.txt
-sudo yum -y install fontconfig >>installoutput.txt
-sudo yum -y install freetype >>installoutput.txt
-sudo yum -y install gettext >>installoutput.txt
-sudo yum -y install grub2 >>installoutput.txt
-sudo yum -y install libjpeg-turbo >>installoutput.txt
-sudo yum -y install libpng >>installoutput.txt
-sudo yum -y install libXext >>installoutput.txt
-sudo yum -y install libXrender >>installoutput.txt
-sudo yum -y install libxslt >>installoutput.txt
-sudo yum -y install apr >>installoutput.txt
-sudo yum -y install apr >>installoutput.txt
-sudo yum -y install glibc >>installoutput.txt
-sudo yum -y install libevent >>installoutput.txt
-sudo yum -y install libselinux >>installoutput.txt
-sudo yum -y install mailcap >>installoutput.txt
-sudo yum -y install openssl-libs >>installoutput.txt
-sudo yum -y install systemd >>installoutput.txt
-sudo yum -y install yajl >>installoutput.txt
+date >>/var/log/installoutput.txt
+sudo yum -y install fontconfig >>/var/log//var/log/installoutput.txt
+sudo yum -y install freetype >>/var/log/installoutput.txt
+sudo yum -y install gettext >>/var/log/installoutput.txt
+sudo yum -y install grub2 >>/var/log/installoutput.txt
+sudo yum -y install libjpeg-turbo >>/var/log/installoutput.txt
+sudo yum -y install libpng >>/var/log/installoutput.txt
+sudo yum -y install libXext >>/var/log/installoutput.txt
+sudo yum -y install libXrender >>/var/log/installoutput.txt
+sudo yum -y install libxslt >>/var/log/installoutput.txt
+sudo yum -y install apr >>/var/log/installoutput.txt
+sudo yum -y install apr >>/var/log/installoutput.txt
+sudo yum -y install glibc >>/var/log/installoutput.txt
+sudo yum -y install libevent >>/var/log/installoutput.txt
+sudo yum -y install libselinux >>/var/log/installoutput.txt
+sudo yum -y install mailcap >>/var/log/installoutput.txt
+sudo yum -y install openssl-libs >>/var/log/installoutput.txt
+sudo yum -y install systemd >>/var/log/installoutput.txt
+sudo yum -y install yajl >>/var/log/installoutput.txt
