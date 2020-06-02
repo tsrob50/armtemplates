@@ -22,3 +22,12 @@ sudo yum -y install mailcap >>/var/log/installoutput.txt
 sudo yum -y install openssl-libs >>/var/log/installoutput.txt
 sudo yum -y install systemd >>/var/log/installoutput.txt
 sudo yum -y install yajl >>/var/log/installoutput.txt
+
+# Need to add the host file update
+# sudo echo "192.241.xx.xx  venus.example.com venus" >> /etc/hosts
+sudo echo "192.168.254.1 testentry.example.com testentry" >> /etc/hosts
+
+# Add ULimit https://access.redhat.com/solutions/61334
+sudo echo "*    soft    nofile  32" >>/etc/security/limits.conf 
+sudo echo "*    hard    nofile  64" >>/etc/security/limits.conf
+sudo echo "*    hard    nproc  4096" >>/etc/security/limits.conf 
