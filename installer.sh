@@ -14,7 +14,7 @@ sudo yum -y install libXext >>/var/log/installoutput.txt
 sudo yum -y install libXrender >>/var/log/installoutput.txt
 sudo yum -y install libxslt >>/var/log/installoutput.txt
 sudo yum -y install apr >>/var/log/installoutput.txt
-sudo yum -y install apr >>/var/log/installoutput.txt
+sudo yum -y install apr-util >>/var/log/installoutput.txt
 sudo yum -y install glibc >>/var/log/installoutput.txt
 sudo yum -y install libevent >>/var/log/installoutput.txt
 sudo yum -y install libselinux >>/var/log/installoutput.txt
