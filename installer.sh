@@ -24,7 +24,14 @@ sudo yum -y install systemd >>/var/log/installoutput.txt
 sudo yum -y install yajl >>/var/log/installoutput.txt
 
 # Need to add the host file update for Informatica servers
-sudo echo "192.168.254.1 testentry.example.com testentry" >> /etc/hosts
+sudo echo 10.100.10.4       vm-axon-prod-west-01 >> /etc/hosts
+sudo echo 10.100.10.9	    BastionServer >> /etc/hosts
+sudo echo 10.100.10.8	    infadb >> /etc/hosts
+sudo echo 10.100.10.6	    infaihs0 >> /etc/hosts
+sudo echo 10.100.10.5	    infaihs1 >> /etc/hosts
+sudo echo 10.100.10.7	    infaihs2 >> /etc/hosts
+sudo echo 10.100.10.11	    infaserverHA >> /etc/hosts
+sudo echo 10.100.10.10	    infaserver >> /etc/hosts
 
 # Add ULimit https://access.redhat.com/solutions/61334
 sudo echo "*    soft    nofile  32" >>/etc/security/limits.conf 
