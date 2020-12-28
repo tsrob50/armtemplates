@@ -120,25 +120,7 @@
                 "description": "IP's are static, first IP for servers"
             }
         },
-        "sizeOfDataDisksInGB": {
-            "type": "string",
-            "metadata": {
-                "description": "Managed disks billed at size allocated, not used"
-            }
-        },
-        "numberOfDataDisks": {
-            "type": "int",
-            "defaultvalue": 1,
-            "allowedvalues": [
-                1,
-                2,
-                3
-            ],
-            "metadata": {
-                "description": "Number of data disks added to each VM"
-            }
-        },
-        "dataDiskStrgType": {
+        "diskStrgType": {
             "type": "string",
             "defaultvalue": "Standard_LRS",
             "allowedvalues": [
@@ -246,25 +228,9 @@
                         "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '_os')]",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "[parameters('dataDiskStrgType')]"
+                            "storageAccountType": "[parameters('diskStrgType')]"
                         }
-                    },
-                    "copy": [
-                        {
-                            "name": "dataDisks",
-                            "count": "[parameters('numberOfDataDisks')]",
-                            "input": {
-                                "caching": "ReadOnly",
-                                "diskSizeGB": "[parameters('sizeOfDataDisksInGB')]",
-                                "lun": "[copyIndex('dataDisks')]",
-                                "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '_data', copyIndex('dataDisks'))]",
-                                "createOption": "Empty",
-                                "managedDisk": {
-                                    "storageAccountType": "[parameters('dataDiskStrgType')]"
-                                }
-                            }
-                        }
-                    ]
+                    }
 
                 },
                 "networkProfile": {
