@@ -26,7 +26,8 @@
             "allowedvalues": [
                 "small",
                 "medium",
-                "large"
+                "large",
+                "dsmall"
             ],
             "metadata": {
                 "description": "Size of B series VM, small 1 core, medium 2 core, Large 4 core "
@@ -44,6 +45,18 @@
             ],
             "metadata": {
                 "descripton": "Image SKU for the VM"
+            }
+        },
+        "vmPriority": {
+            "type": "string",
+            "defaultValue": "Regular",
+            "allowedValues": [
+                "Regular",
+                "Low",
+                "Spot"
+            ],
+            "metadata": {
+                "description": "Enter description"
             }
         },
         "adminUsername": {
@@ -120,7 +133,11 @@
                 "description": "IP's are static, first IP for servers"
             }
         },
+<<<<<<< HEAD:server-managedimage.json
         "diskStrgType": {
+=======
+        "DiskStrgType": {
+>>>>>>> 3c58a6bddc38416cb988a307d8909fabc679a662:server-managedimage.json
             "type": "string",
             "defaultvalue": "Standard_LRS",
             "allowedvalues": [
@@ -171,6 +188,18 @@
                 "description": "Number of VMs to deploy"
             }
         },
+        "workspaceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter the valure of the Log Analytics Workspace ID"
+            }
+        },
+        "workspaceKey": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter the value of the Log Analytics Workspace Key"
+            }
+        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -186,6 +215,7 @@
         "small": "Standard_B1MS",
         "medium": "Standard_B2S",
         "large": "Standard_B4MS",
+        "dsmall": "Standard_DS1_v2",
         "availabilitySetName": "[concat(parameters('virtualMachineNamePrefix'), '_AS')]",
         "storageAccountName": "[tolower(concat(parameters('virtualMachineNamePrefix'), 'diag', take(uniqueString(resourceGroup().id), 5)))]",
         "imageResourceId": "[resourceId(parameters('ImageSourceResourceGroup'), 'Microsoft.Compute/images', parameters('ImageSourceName'))]"
@@ -194,7 +224,7 @@
         {
             "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1))]",
             "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2018-06-01",
+            "apiVersion": "2019-03-01",
             "location": "[parameters('location')]",
             "tags": "[parameters('tagValues')]",
             "copy": {
@@ -228,10 +258,16 @@
                         "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '_os')]",
                         "caching": "ReadWrite",
                         "managedDisk": {
+<<<<<<< HEAD:server-managedimage.json
                             "storageAccountType": "[parameters('diskStrgType')]"
                         }
                     }
 
+=======
+                            "storageAccountType": "[parameters('DiskStrgType')]"
+                        }
+                    }
+>>>>>>> 3c58a6bddc38416cb988a307d8909fabc679a662:server-managedimage.json
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -246,6 +282,11 @@
                         "enabled": true,
                         "storageUri": "[reference(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2017-06-01').primaryEndpoints['blob']]"
                     }
+                },
+                "priority": "[parameters('vmPriority')]",
+                "evictionPolicy": "Deallocate",
+                "billingProfile": {
+                    "maxPrice": -1
                 },
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
@@ -357,6 +398,31 @@
                 "settings": {
                     "Properties": [
                     ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('virtualMachineNamePrefix'), copyindex(1),'/OMSExtension')]",
+            "apiVersion": "2015-06-15",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "domainJoinLoop"
+            ],
+            "copy": {
+                "name": "OMS-add-loop",
+                "count": "[parameters('numberOfInstances')]"
+            },
+            "properties": {
+                "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+                "type": "MicrosoftMonitoringAgent",
+                "typeHandlerVersion": "1.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workspaceId": "[parameters('workspaceId')]"
+                },
+                "protectedSettings": {
+                    "workspaceKey": "[parameters('workspaceKey')]"
                 }
             }
         }
